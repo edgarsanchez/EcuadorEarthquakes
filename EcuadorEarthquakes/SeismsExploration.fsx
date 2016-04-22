@@ -1,7 +1,7 @@
 ﻿#r "../packages/FSharp.Data.2.2.5/lib/net40/FSharp.Data.dll"
 
-open System
 open FSharp.Data
+open System
 
 type Seisms = HtmlProvider<"http://eventos.igepn.edu.ec/eqevents/events2.html">
 
@@ -20,8 +20,8 @@ let seismToString (seism: Seisms.Table1.Row) =
             seism.``Local Time``, 
             seism.Mag, 
             seism.Type, 
-            longToFloat seism.Longitude, 
-            latToFloat seism.Latitude,
+            longToFloat seism.Latitude, 
+            latToFloat seism.Longitude,
             seism.``Depth (km)``,
             seism.``Region Name``,
             seism.Status,
@@ -31,9 +31,8 @@ let headers = String.Join (",", Seisms.GetSample().Tables.Table1.Headers.Value)
 
 
 let pageIndexes = "" :: ([1 .. 49] |> List.map Convert.ToString) // the page indexes are "", "1", "2", ..., "49"
-
-
 let seisms = pageIndexes |> List.collect 
                 (fun pageIndex ->
                     let page = Seisms.Load("http://eventos.igepn.edu.ec/eqevents/events" + pageIndex + ".html")
                     page.Tables.Table1.Rows |> Array.map seismToString |> Array.toList)
+
